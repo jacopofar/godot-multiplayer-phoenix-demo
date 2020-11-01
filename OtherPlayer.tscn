@@ -1,0 +1,124 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://MainGuySpriteSheet.png" type="Texture" id=1]
+[ext_resource path="res://OtherPlayer.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+uniform float red_factor = 0.9;
+uniform float green_factor = 0.9;
+uniform float blue_factor = 0.0;
+
+
+void fragment() {
+    vec4 curr_color = texture(TEXTURE, UV); // Get current color of pixel
+
+	COLOR = vec4(
+		(curr_color.r + red_factor * 6.0) / 7.0,
+		(curr_color.g + green_factor * 6.0) / 7.0,
+		(curr_color.b + blue_factor * 6.0) / 7.0,
+
+		curr_color.a);
+//    if (curr_color == vec4(0,0,0,1)){
+//        COLOR = vec4(1,0,0,1);
+//    } else{
+//        COLOR = curr_color;
+//    }
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = SubResource( 6 )
+shader_param/red_factor = 0.9
+shader_param/green_factor = 0.9
+shader_param/blue_factor = 0.0
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 10.7134
+height = 12.2238
+
+[sub_resource type="Animation" id=2]
+resource_name = "down"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.0319246, 0.872605 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 2 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "left"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.955077 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 9, 11 ]
+}
+
+[sub_resource type="Animation" id=4]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.784509 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 3, 5 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "up"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.0156592, 0.840377 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 6, 8 ]
+}
+
+[node name="OtherPlayer" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 7 )
+position = Vector2( 0.451494, 1.48101 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 3
+frame = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.07983, 1.38836 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 3.0
+anims/down = SubResource( 2 )
+anims/left = SubResource( 3 )
+anims/right = SubResource( 4 )
+anims/up = SubResource( 5 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 0, 32 )
