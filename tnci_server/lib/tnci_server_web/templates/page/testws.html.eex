@@ -1,0 +1,32 @@
+<h1>Test for web socket!</h1>
+
+<div id="event-list">
+</div>
+
+<button id="generate-msg">Generate WS message</button>
+
+<script src="/js/phoenix.js">
+</script>
+
+<script>
+  let socket = new Phoenix.Socket("/socket", {params: {userToken: "123"}});
+
+  socket.connect();
+
+  let channel = socket.channel("room:lobby", {});
+
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) });
+
+  channel.on("new_msg", payload => {
+    let messageItem = document.createElement("p")
+    messageItem.innerText = `[${Date()}] ${payload.body}`
+    document.getElementById('event-list').appendChild(messageItem)
+  })
+
+  document.getElementById('generate-msg').addEventListener("click", event => {
+    channel.push("new_msg", {body: window.prompt('payload?')})
+  })
+
+</script>

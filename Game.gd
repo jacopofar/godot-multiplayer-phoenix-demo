@@ -8,7 +8,22 @@ extends TileMap
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var socket : PhoenixSocket
+	var channel : PhoenixChannel
+	var presence : PhoenixPresence
+
+	socket = PhoenixSocket.new("ws://localhost:4000/socket", {
+	  params = {user_id = 10, token = "some_token"}
+	})
+	
+	presence = PhoenixPresence.new()
+	channel = socket.channel("room:lobby", {}, presence)
+	
+	socket.connect_socket()
+	
+	var result = channel.push("new_msg", parse_json('{"body": "Ciao sono Godot"}'))
+	print(result)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
