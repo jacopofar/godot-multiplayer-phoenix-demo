@@ -12,8 +12,10 @@ func set_tint(r, g, b):
 
 func _physics_process(delta):
 	if target == null:
+		set_physics_process(false)
 		return
 	if position.distance_to(target) < 2.0:
+		target = null
 		return
 	var direction = position.direction_to(target)
 	# randomize a bit
@@ -40,7 +42,7 @@ func _physics_process(delta):
 		$RayCast2D.cast_to = direction.normalized() * 32
 		var movement = speed * direction * delta
 		# warning-ignore:return_value_discarded
-		if move_and_collide(movement) != null and randf() > 0.8:
+		if move_and_collide(movement) != null and randf() > 0.999:
 			target = null
 			$AnimationPlayer.stop()
 	previous_direction = direction
