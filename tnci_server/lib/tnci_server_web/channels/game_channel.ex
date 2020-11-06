@@ -1,7 +1,7 @@
 defmodule TnciServerWeb.GameChannel do
   use Phoenix.Channel
 
-  def join("game:" <> game_id, params, socket) do
+  def join("game:" <> game_id, _params, socket) do
     this_user = socket.assigns[:user_name]
     IO.puts("The player #{this_user} joined the game #{game_id}")
     {:ok, socket}

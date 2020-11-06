@@ -92,11 +92,12 @@ enabled = true
 cast_to = Vector2( 0, 32 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -19.6644
-margin_top = -31.5885
-margin_right = 23.3356
-margin_bottom = -17.5885
+margin_left = -24.782
+margin_top = -32.2774
+margin_right = 25.218
+margin_bottom = -18.2774
 text = "missing"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
