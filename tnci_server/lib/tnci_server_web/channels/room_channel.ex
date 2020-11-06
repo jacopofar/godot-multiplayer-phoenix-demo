@@ -16,6 +16,7 @@ defmodule TnciServerWeb.RoomChannel do
     else
       push(socket, "new_msg", %{body: "****"})
     end
+
     {:noreply, socket}
   end
 end

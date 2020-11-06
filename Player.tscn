@@ -90,3 +90,13 @@ anims/up = SubResource( 5 )
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 32 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -19.6644
+margin_top = -31.5885
+margin_right = 23.3356
+margin_bottom = -17.5885
+text = "missing"
+__meta__ = {
+"_edit_use_anchors_": false
+}

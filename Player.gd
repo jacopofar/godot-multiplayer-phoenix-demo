@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal on_new_position
+
 # Player movement speed
 export var speed: int = 150
 export var interaction_range: float = 50.0
@@ -8,6 +10,10 @@ var keyboard_pressed: bool = false
 var mouse_pressed: bool = false
 var touch_pressed: bool = false
 var touch_initial_direction: Vector2 =  Vector2(0, 1)
+
+func set_player_name(player_name):
+	$Label.text = player_name + " (You)"
+
 
 func _physics_process(delta):
 	var direction: Vector2
@@ -40,8 +46,9 @@ func _physics_process(delta):
 		# try a movement only if there is something to do
 		direction = direction.normalized()
 		var movement = speed * direction * delta
-		# warning-ignore:return_value_discarded
+
 		move_and_collide(movement)
+		emit_signal("on_new_position", position)
 		$RayCast2D.cast_to = direction.normalized() * 32
 		
 	
