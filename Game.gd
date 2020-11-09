@@ -7,12 +7,16 @@ var socket : PhoenixSocket
 var channel : PhoenixChannel
 var presence : PhoenixPresence
 
+var all_players = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# TODO remove these lines later, to not force a new name
+	randomize()
+	my_name = "Mister " + str(randi() % 400)
 	$Player.set_player_name(my_name)
 	socket = PhoenixSocket.new("ws://127.0.0.1:4000/socket", {
-		params = {user_name = my_name}
+		params = { user_name = my_name }
 	})
 	# Subscribe to Socket events
 	socket.connect("on_open", self, "_on_Socket_open")
@@ -67,10 +71,22 @@ func _on_Socket_connecting(is_connecting):
 
 func _on_Channel_event(event, payload, status):
 	print("_on_Channel_event:  ", event, ", ", status, ", ", payload)
+	if event == "new_player":
+		var new_player_name = payload["user"]
+		if new_player_name != my_name:
+			print("new player detected", new_player_name)
+			var extra_player = load("res://OtherPlayer.tscn").instance()
+			all_players[new_player_name] = extra_player
+			extra_player.set_player_name(new_player_name)
+			extra_player.position = Vector2(payload["x"], payload["y"])
+			add_child(extra_player)
+		return
 
 func _on_Channel_join_result(status, result):
 	print("_on_Channel_join_result:  ", status, result)
-
+	var did_push = channel.push("new_player", {"x": int(position.x), "y": int(position.y)})
+	print("did push the new_player? ", did_push)
+			
 func _on_Channel_error(error):
 	print("_on_Channel_error: " + str(error))
 

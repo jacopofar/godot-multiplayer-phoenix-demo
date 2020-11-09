@@ -3,7 +3,7 @@
 [ext_resource path="res://MainGuySpriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://OtherPlayer.gd" type="Script" id=2]
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform float red_factor = 0.9;
@@ -27,19 +27,18 @@ void fragment() {
 //    }
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
-shader = SubResource( 6 )
+shader = SubResource( 1 )
 shader_param/red_factor = 0.9
 shader_param/green_factor = 0.9
 shader_param/blue_factor = 0.0
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 10.7134
 height = 12.2238
 
-[sub_resource type="Animation" id=2]
-resource_name = "down"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -53,8 +52,7 @@ tracks/0/keys = {
 "values": [ 0, 2 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "left"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -68,7 +66,7 @@ tracks/0/keys = {
 "values": [ 9, 11 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -82,8 +80,7 @@ tracks/0/keys = {
 "values": [ 3, 5 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "up"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -101,7 +98,7 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 7 )
+material = SubResource( 2 )
 position = Vector2( 0.451494, 1.48101 )
 texture = ExtResource( 1 )
 vframes = 4
@@ -110,15 +107,26 @@ frame = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1.07983, 1.38836 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 3.0
-anims/down = SubResource( 2 )
-anims/left = SubResource( 3 )
-anims/right = SubResource( 4 )
-anims/up = SubResource( 5 )
+anims/down = SubResource( 4 )
+anims/left = SubResource( 5 )
+anims/right = SubResource( 6 )
+anims/up = SubResource( 7 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 32 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -25.3934
+margin_top = -33.1162
+margin_right = 24.6066
+margin_bottom = -19.1162
+text = "missing"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

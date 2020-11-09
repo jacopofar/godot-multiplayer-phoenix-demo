@@ -14,8 +14,9 @@ config :tnci_server, TnciServerWeb.Endpoint,
   render_errors: [view: TnciServerWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: TnciServer.PubSub,
   live_view: [signing_salt: "73eTQV/u"]
-  # to listen on IPv6
-  # http: [port: 4000, transport_options: [socket_opts: [:inet6]]]
+
+# to listen on IPv6
+# http: [port: 4000, transport_options: [socket_opts: [:inet6]]]
 
 # Configures Elixir's Logger
 config :logger, :console,

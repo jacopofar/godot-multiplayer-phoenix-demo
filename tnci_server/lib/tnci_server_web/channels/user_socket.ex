@@ -19,7 +19,11 @@ defmodule TnciServerWeb.UserSocket do
   @impl true
   def connect(params, socket, _connect_info) do
     # TODO there's no authentication, the user simply sends its name
-    {:ok, assign(socket, :user_name, params["user_name"])}
+    {:ok,
+     assign(socket,
+       user_name: params["user_name"],
+       joined_at: :calendar.universal_time()
+     )}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

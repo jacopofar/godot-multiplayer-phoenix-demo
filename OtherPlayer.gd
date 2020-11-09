@@ -48,3 +48,5 @@ func _physics_process(delta):
 	previous_direction = direction
 		
 
+func set_player_name(other_player_name: String):
+	$Label.text = other_player_name
