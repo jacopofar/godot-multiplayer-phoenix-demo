@@ -15,7 +15,12 @@ func _ready():
 	randomize()
 	my_name = "Mister " + str(randi() % 400)
 	$Player.set_player_name(my_name)
-	socket = PhoenixSocket.new("ws://127.0.0.1:4000/socket", {
+	var ws_address = "ws://192.168.0.185:4000/socket"
+
+
+	if OS.get_name() == "HTML5":
+		ws_address = "ws://" + JavaScript.eval("location.host", true) + "/socket"
+	socket = PhoenixSocket.new(ws_address, {
 		params = { user_name = my_name }
 	})
 	# Subscribe to Socket events
