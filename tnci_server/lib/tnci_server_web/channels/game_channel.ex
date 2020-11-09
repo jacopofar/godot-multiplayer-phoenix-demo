@@ -10,6 +10,7 @@ defmodule TnciServerWeb.GameChannel do
   def handle_in("new_position", %{"x" => x, "y" => y}, socket) do
     this_user = socket.assigns[:user_name]
     IO.puts("new position for #{this_user}: (#{x}, #{y})")
+    broadcast!(socket, "new_position", %{user: this_user, x: x, y: y})
     {:noreply, socket}
   end
 

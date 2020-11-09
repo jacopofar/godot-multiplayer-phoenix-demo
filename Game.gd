@@ -81,6 +81,12 @@ func _on_Channel_event(event, payload, status):
 			extra_player.position = Vector2(payload["x"], payload["y"])
 			add_child(extra_player)
 		return
+	if event == "new_position":
+		var moving_player_name = payload["user"]
+		if moving_player_name != my_name:
+			all_players[moving_player_name].target = Vector2(payload["x"], payload["y"])
+			all_players[moving_player_name].set_physics_process(true)
+		return
 
 func _on_Channel_join_result(status, result):
 	print("_on_Channel_join_result:  ", status, result)
