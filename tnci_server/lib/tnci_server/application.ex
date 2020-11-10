@@ -12,9 +12,10 @@ defmodule TnciServer.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: TnciServer.PubSub},
       # Start the Endpoint (http/https)
-      TnciServerWeb.Endpoint
+      TnciServerWeb.Endpoint,
       # Start a worker by calling: TnciServer.Worker.start_link(arg)
-      # {TnciServer.Worker, arg}
+      # {TnciServer.Worker, arg},
+      {TnciServer.PlayerList, [name: :player_list]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
