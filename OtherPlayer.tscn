@@ -8,17 +8,16 @@ code = "shader_type canvas_item;
 
 uniform float red_factor = 0.9;
 uniform float green_factor = 0.9;
-uniform float blue_factor = 0.0;
+uniform float blue_factor = 0.9;
 
 
 void fragment() {
     vec4 curr_color = texture(TEXTURE, UV); // Get current color of pixel
-
+	
 	COLOR = vec4(
-		(curr_color.r + red_factor * 6.0) / 7.0,
-		(curr_color.g + green_factor * 6.0) / 7.0,
-		(curr_color.b + blue_factor * 6.0) / 7.0,
-
+		(curr_color.r + red_factor * 3.0) / 4.0,
+		(curr_color.g + green_factor * 3.0) / 4.0,
+		(curr_color.b + blue_factor * 3.0) / 4.0,
 		curr_color.a);
 //    if (curr_color == vec4(0,0,0,1)){
 //        COLOR = vec4(1,0,0,1);

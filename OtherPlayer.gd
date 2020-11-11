@@ -1,7 +1,7 @@
 extends KinematicBody2D
 export var speed: int = 150
 
-var target = Vector2(120, 341)
+var target = null
 var previous_direction = Vector2(randf() - 0.5, randf() - 0.5)
 
 func set_tint(r, g, b):

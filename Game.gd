@@ -27,6 +27,13 @@ func _ready():
 	room_id = yield($BlockingInputBox, "text_from_player")
 	print("Got the room_id:", room_id)
 
+
+	var maxval = 600
+	var x = randi() % maxval - maxval / 2
+	var y = randi() % maxval - maxval / 2
+	print("Initializing player at ", x, ", ", y)
+	$Player.position = Vector2(x, y)
+	
 	var ws_address = "ws://192.168.0.185:4000/socket"
 
 # TODO enable this when serving statically from the same server
@@ -93,12 +100,20 @@ func _on_Channel_event(event, payload, status):
 	if event == "new_player":
 		var new_player_name = payload["user"]
 		if new_player_name != my_name:
-			print("new player detected", new_player_name)
+			print("new player detected: ", new_player_name)
 			var extra_player = load("res://OtherPlayer.tscn").instance()
 			all_players[new_player_name] = extra_player
 			extra_player.set_player_name(new_player_name)
-			extra_player.position = Vector2(payload["x"], payload["y"])
+			var tint_buffer = new_player_name.sha256_buffer()
+			
+			
+			extra_player.set_tint(
+				tint_buffer[0] / 255.0,
+				tint_buffer[1] / 255.0,
+				tint_buffer[2] / 255.0
+			)
 			add_child(extra_player)
+			extra_player.position = Vector2(payload["x"], payload["y"])
 		return
 	if event == "new_position":
 		var moving_player_name = payload["user"]
@@ -133,21 +148,3 @@ func _on_Player_new_position(position: Vector2):
 	var did_push = channel.push("new_position", {"x": int(position.x), "y": int(position.y)})
 	if !did_push:
 		print_debug("error, could not send the position!")
-
-
-func create_random_other_player():
-	var extra_player = load("res://OtherPlayer.tscn").instance()
-	var maxval = 10000
-	
-	var x = randi() % maxval - maxval / 2
-	var y = randi() % maxval - maxval / 2
-	print("Creating player at ", x, ", ", y)
-	extra_player.position = Vector2(x, y)
-	extra_player.set_tint(
-		(sin(x % maxval) - 1.0 ) / 2.0 + 0.5,
-		(sin(y % maxval) - 1.0 ) / 2.0 + 0.5,
-		(sin((y * x) % maxval) - 1.0 ) / 2.0 + 0.5
-		)
-	add_child(extra_player)
-	
-	$Player/Camera2D.zoom += Vector2(0.001, 0.001)
