@@ -13,19 +13,20 @@ var all_players = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$BlockingDialogBox.append_text("Choose a nickname", 20)
+	$BlockingDialogBox.append_text("Choose a nickname", 30)
 	yield($BlockingDialogBox, "box_hidden")
 	$BlockingInputBox.ask_input()
 	my_name = yield($BlockingInputBox, "text_from_player")
 	
+	$Player.set_player_name(my_name)
 	print("Got the name:", my_name)
-	$BlockingDialogBox.append_text("Insert the room id", 20)
+	$BlockingDialogBox.append_text("Insert the room id", 30)
 	yield($BlockingDialogBox, "box_hidden")
 	$BlockingInputBox.ask_input()
 	
 	room_id = yield($BlockingInputBox, "text_from_player")
 	print("Got the room_id:", room_id)
-	$Player.set_player_name(room_id)
+
 	var ws_address = "ws://192.168.0.185:4000/socket"
 
 # TODO enable this when serving statically from the same server
