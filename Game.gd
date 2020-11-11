@@ -17,9 +17,9 @@ func _ready():
 	$Player.set_player_name(my_name)
 	var ws_address = "ws://192.168.0.185:4000/socket"
 
-
-	if OS.get_name() == "HTML5":
-		ws_address = "ws://" + JavaScript.eval("location.host", true) + "/socket"
+# TODO enable this when serving statically from the same server
+#	if OS.get_name() == "HTML5":
+#		ws_address = "ws://" + JavaScript.eval("location.host", true) + "/socket"
 	socket = PhoenixSocket.new(ws_address, {
 		params = { user_name = my_name }
 	})
@@ -117,7 +117,8 @@ func _on_Presence_leave(leaves):
 
 func _on_Player_new_position(position: Vector2):
 	var did_push = channel.push("new_position", {"x": int(position.x), "y": int(position.y)})
-	print("did push new position? ", did_push)
+	if !did_push:
+		print_debug("error, could not send the position!")
 
 
 func create_random_other_player():

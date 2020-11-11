@@ -15,7 +15,7 @@ defmodule TnciServer.Application do
       TnciServerWeb.Endpoint,
       # Start a worker by calling: TnciServer.Worker.start_link(arg)
       # {TnciServer.Worker, arg},
-      {TnciServer.PlayerList, [name: :player_list]}
+      TnciServer.PlayerList
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
