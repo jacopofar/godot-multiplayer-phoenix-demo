@@ -7,19 +7,32 @@ var socket : PhoenixSocket
 var channel : PhoenixChannel
 var presence : PhoenixPresence
 
+
+
 var all_players = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# TODO remove these lines later, to not force a new name
-	randomize()
-	my_name = "Mister " + str(randi() % 400)
-	$Player.set_player_name(my_name)
+	$BlockingDialogBox.append_text("Choose a nickname", 20)
+	yield($BlockingDialogBox, "box_hidden")
+	$BlockingInputBox.ask_input()
+	my_name = yield($BlockingInputBox, "text_from_player")
+	
+	print("Got the name:", my_name)
+	$BlockingDialogBox.append_text("Insert the room id", 20)
+	yield($BlockingDialogBox, "box_hidden")
+	$BlockingInputBox.ask_input()
+	
+	room_id = yield($BlockingInputBox, "text_from_player")
+	print("Got the room_id:", room_id)
+	$Player.set_player_name(room_id)
 	var ws_address = "ws://192.168.0.185:4000/socket"
 
 # TODO enable this when serving statically from the same server
 #	if OS.get_name() == "HTML5":
 #		ws_address = "ws://" + JavaScript.eval("location.host", true) + "/socket"
+	# TODO all this part here should start after the user chose the nick and the room
+	# and after the initial random position has been set
 	socket = PhoenixSocket.new(ws_address, {
 		params = { user_name = my_name }
 	})

@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CanvasLayer",
+"class": "BlockingDialogBox",
+"language": "GDScript",
+"path": "res://addons/blocking_dialog_box/blocking_dialog_box.gd"
+}, {
+"base": "CanvasLayer",
+"class": "BlockingInputBox",
+"language": "GDScript",
+"path": "res://addons/blocking_dialog_box/blocking_input_box.gd"
+}, {
+"base": "CanvasLayer",
+"class": "BlockingListSelection",
+"language": "GDScript",
+"path": "res://addons/blocking_dialog_box/blocking_list_selection.gd"
+}, {
 "base": "Node",
 "class": "PhoenixChannel",
 "language": "GDScript",
@@ -35,6 +50,9 @@ _global_script_classes=[ {
 "path": "res://PhoenixChannel/Utils.gd"
 } ]
 _global_script_class_icons={
+"BlockingDialogBox": "",
+"BlockingInputBox": "",
+"BlockingListSelection": "",
 "PhoenixChannel": "",
 "PhoenixMessage": "",
 "PhoenixPresence": "",
@@ -47,6 +65,10 @@ _global_script_class_icons={
 config/name="Totally not a Copyright Infringement"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "blocking_dialog_box" )
 
 [input]
 
