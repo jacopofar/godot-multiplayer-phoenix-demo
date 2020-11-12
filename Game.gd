@@ -13,6 +13,8 @@ var all_players = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Enable IME support
+	OS.set_ime_active(true)
 	$BlockingDialogBox.append_text("Choose a nickname", 30)
 	yield($BlockingDialogBox, "box_hidden")
 	$BlockingInputBox.ask_input()
@@ -33,8 +35,9 @@ func _ready():
 	var y = randi() % maxval - maxval / 2
 	print("Initializing player at ", x, ", ", y)
 	$Player.position = Vector2(x, y)
+#	var ws_address = "ws://192.168.0.185:4000/socket"
 	
-	var ws_address = "ws://192.168.0.185:4000/socket"
+	var ws_address = "ws://127.0.0.1:4000/socket"
 
 # TODO enable this when serving statically from the same server
 #	if OS.get_name() == "HTML5":
