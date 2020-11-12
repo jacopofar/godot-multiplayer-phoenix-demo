@@ -1,5 +1,8 @@
 # Multiplayer Websocket Godot demo
 
+![Godot 3.2](https://img.shields.io/badge/godot-v3.2-%23478cbf)
+![Phoenix](https://github.com/phoenixframework/media/blob/master/badges/poweredby-phoenix-badge1-02.png)
+
 This project implements a multi-room multiplayer game in Godot 3.2 using a Phoenix 1.5 backend.
 
 Client-server communication uses the Phoenix channel protocol.
@@ -28,6 +31,7 @@ Using a shader every player has a different color (based on the SHA1 of the name
 
 I'm satisfied with the demo and don't plan to work more on it, but in case you want to develop on this or use it for some serious project, here are some things to be aware of:
 
+* no tests!
 * there's no authentication, the server trusts every username and you can even enter with the username of another user
 * players are spawn at random positions, which may overlap. The initial position should be decided by the server to avoid this
 * there's no mechanism to delete users who disconnect
